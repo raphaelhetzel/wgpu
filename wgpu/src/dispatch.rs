@@ -585,6 +585,16 @@ macro_rules! dispatch_types {
                 }
             }
 
+            #[cfg(custom)]
+            #[inline]
+            #[allow(clippy::allow_attributes, unused)]
+            pub fn as_custom(&self) -> &$custom_type {
+                match self {
+                    Self::Custom(value) => value,
+                    _ => panic!(concat!(stringify!($name), " is not custom")),
+                }
+            }
+
             #[cfg(webgpu)]
             #[inline]
             #[allow(clippy::allow_attributes, unused)]
