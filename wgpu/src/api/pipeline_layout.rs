@@ -8,7 +8,8 @@ use crate::*;
 /// Corresponds to [WebGPU `GPUPipelineLayout`](https://gpuweb.github.io/gpuweb/#gpupipelinelayout).
 #[derive(Debug, Clone)]
 pub struct PipelineLayout {
-    pub(crate) inner: dispatch::DispatchPipelineLayout,
+    /// Temporarily Public for the Custom Backend
+    pub inner: dispatch::DispatchPipelineLayout,
 }
 #[cfg(send_sync)]
 static_assertions::assert_impl_all!(PipelineLayout: Send, Sync);

@@ -8,7 +8,8 @@ use crate::*;
 /// https://gpuweb.github.io/gpuweb/#compute-pass-encoder).
 #[derive(Debug)]
 pub struct ComputePass<'encoder> {
-    pub(crate) inner: dispatch::DispatchComputePass,
+    /// Temporarily Public for the Custom Backend
+    pub inner: dispatch::DispatchComputePass,
 
     /// This lifetime is used to protect the [`CommandEncoder`] from being used
     /// while the pass is alive. This needs to be PhantomDrop to prevent the lifetime

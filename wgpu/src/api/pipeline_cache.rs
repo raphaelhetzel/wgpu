@@ -69,7 +69,8 @@ use crate::*;
 /// [renaming]: std::fs::rename
 #[derive(Debug, Clone)]
 pub struct PipelineCache {
-    pub(crate) inner: crate::dispatch::DispatchPipelineCache,
+    /// Temporarily Public for the Custom Backend
+    pub inner: crate::dispatch::DispatchPipelineCache,
 }
 
 #[cfg(send_sync)]

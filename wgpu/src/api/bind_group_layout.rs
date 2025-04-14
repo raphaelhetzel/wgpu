@@ -13,7 +13,8 @@ use crate::*;
 /// https://gpuweb.github.io/gpuweb/#gpubindgrouplayout).
 #[derive(Debug, Clone)]
 pub struct BindGroupLayout {
-    pub(crate) inner: dispatch::DispatchBindGroupLayout,
+    /// Temporarily Public for the Custom Backend
+    pub inner: dispatch::DispatchBindGroupLayout,
 }
 #[cfg(send_sync)]
 static_assertions::assert_impl_all!(BindGroupLayout: Send, Sync);

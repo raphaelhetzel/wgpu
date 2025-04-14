@@ -9,7 +9,8 @@ use crate::*;
 /// Corresponds to [WebGPU `GPUCommandBuffer`](https://gpuweb.github.io/gpuweb/#command-buffer).
 #[derive(Debug)]
 pub struct CommandBuffer {
-    pub(crate) buffer: dispatch::DispatchCommandBuffer,
+    /// Temporarily Public for the Custom Backend
+    pub buffer: dispatch::DispatchCommandBuffer,
 }
 #[cfg(send_sync)]
 static_assertions::assert_impl_all!(CommandBuffer: Send, Sync);

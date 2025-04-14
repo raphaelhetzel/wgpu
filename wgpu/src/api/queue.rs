@@ -12,7 +12,8 @@ use crate::*;
 /// Corresponds to [WebGPU `GPUQueue`](https://gpuweb.github.io/gpuweb/#gpu-queue).
 #[derive(Debug, Clone)]
 pub struct Queue {
-    pub(crate) inner: dispatch::DispatchQueue,
+    /// Temporarily Public for the Custom Backend
+    pub inner: dispatch::DispatchQueue,
 }
 #[cfg(send_sync)]
 static_assertions::assert_impl_all!(Queue: Send, Sync);

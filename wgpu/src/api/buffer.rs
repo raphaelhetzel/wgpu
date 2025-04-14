@@ -175,6 +175,7 @@ use crate::*;
 /// [`MAP_WRITE`]: BufferUsages::MAP_WRITE
 #[derive(Debug, Clone)]
 pub struct Buffer {
+    /// Temporarily Public for the Custom Backend
     pub inner: dispatch::DispatchBuffer,
     pub(crate) map_context: Arc<Mutex<MapContext>>,
     pub(crate) size: wgt::BufferAddress,

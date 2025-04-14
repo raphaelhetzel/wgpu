@@ -17,7 +17,8 @@ use crate::*;
 /// Corresponds to [WebGPU `GPUShaderModule`](https://gpuweb.github.io/gpuweb/#shader-module).
 #[derive(Debug, Clone)]
 pub struct ShaderModule {
-    pub(crate) inner: dispatch::DispatchShaderModule,
+    /// Temporarily Public for the Custom Backend
+    pub inner: dispatch::DispatchShaderModule,
 }
 #[cfg(send_sync)]
 static_assertions::assert_impl_all!(ShaderModule: Send, Sync);

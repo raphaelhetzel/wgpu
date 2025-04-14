@@ -19,7 +19,8 @@ use crate::{
 /// Corresponds to [WebGPU `GPUCommandEncoder`](https://gpuweb.github.io/gpuweb/#command-encoder).
 #[derive(Debug)]
 pub struct CommandEncoder {
-    pub(crate) inner: dispatch::DispatchCommandEncoder,
+    /// Temporarily Public for the Custom Backend
+    pub inner: dispatch::DispatchCommandEncoder,
 }
 #[cfg(send_sync)]
 static_assertions::assert_impl_all!(CommandEncoder: Send, Sync);

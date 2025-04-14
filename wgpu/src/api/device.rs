@@ -17,7 +17,8 @@ use crate::*;
 /// Corresponds to [WebGPU `GPUDevice`](https://gpuweb.github.io/gpuweb/#gpu-device).
 #[derive(Debug, Clone)]
 pub struct Device {
-    pub(crate) inner: dispatch::DispatchDevice,
+    /// Temporarily Public for the Custom Backend
+    pub inner: dispatch::DispatchDevice,
 }
 #[cfg(send_sync)]
 static_assertions::assert_impl_all!(Device: Send, Sync);

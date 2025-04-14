@@ -11,12 +11,20 @@ macro_rules! dyn_type {
     // but we still use it to provide Eq,Ord,Hash implementations
     (pub mut struct $name:ident(dyn $interface:tt)) => {
         #[derive(Debug)]
-        pub(crate) struct $name(Arc<dyn $interface>);
+        pub struct $name(Arc<dyn $interface>);
         crate::cmp::impl_eq_ord_hash_arc_address!($name => .0);
 
         impl $name {
             pub(crate) fn new<T: $interface>(t: T) -> Self {
                 Self(Arc::new(t))
+            }
+
+            #[allow(unused)]
+            pub fn downcast<T: $interface>(&self) -> Arc<T> {
+                // https://users.rust-lang.org/t/arc-downcast-without-the-requirement-for-send-sync/33356
+                let cloned = self.0.clone();
+                let ptr = Arc::into_raw(cloned).cast::<T>();
+                unsafe { Arc::from_raw(ptr) }
             }
         }
 
@@ -39,12 +47,20 @@ macro_rules! dyn_type {
     // cloning of arc is allowed
     (pub ref struct $name:ident(dyn $interface:tt)) => {
         #[derive(Debug, Clone)]
-        pub(crate) struct $name(Arc<dyn $interface>);
+        pub struct $name(Arc<dyn $interface>);
         crate::cmp::impl_eq_ord_hash_arc_address!($name => .0);
 
         impl $name {
             pub(crate) fn new<T: $interface>(t: T) -> Self {
                 Self(Arc::new(t))
+            }
+
+            #[allow(unused)]
+            pub fn downcast<T: $interface>(&self) -> Arc<T> {
+                // https://users.rust-lang.org/t/arc-downcast-without-the-requirement-for-send-sync/33356
+                let cloned = self.0.clone();
+                let ptr = Arc::into_raw(cloned).cast::<T>();
+                unsafe { Arc::from_raw(ptr) }
             }
         }
 
