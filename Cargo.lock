@@ -4898,12 +4898,10 @@ version = "25.0.0"
 dependencies = [
  "bitflags 2.9.0",
  "bytemuck",
- "js-sys",
  "log",
  "serde",
  "serde_json",
  "thiserror 2.0.12",
- "web-sys",
 ]
 
 [[package]]

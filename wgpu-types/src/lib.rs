@@ -6862,124 +6862,124 @@ impl<T> TexelCopyTextureInfo<T> {
 )]
 pub type ImageCopyTexture<T> = TexelCopyTextureInfo<T>;
 
-/// View of an external texture that can be used to copy to a texture.
-///
-/// Corresponds to [WebGPU `GPUCopyExternalImageSourceInfo`](
-/// https://gpuweb.github.io/gpuweb/#dictdef-gpuimagecopyexternalimage).
-#[cfg(target_arch = "wasm32")]
-#[derive(Clone, Debug)]
-pub struct CopyExternalImageSourceInfo {
-    /// The texture to be copied from. The copy source data is captured at the moment
-    /// the copy is issued.
-    pub source: ExternalImageSource,
-    /// The base texel used for copying from the external image. Together
-    /// with the `copy_size` argument to copy functions, defines the
-    /// sub-region of the image to copy.
-    ///
-    /// Relative to the top left of the image.
-    ///
-    /// Must be [`Origin2d::ZERO`] if [`DownlevelFlags::UNRESTRICTED_EXTERNAL_TEXTURE_COPIES`] is not supported.
-    pub origin: Origin2d,
-    /// If the Y coordinate of the image should be flipped. Even if this is
-    /// true, `origin` is still relative to the top left.
-    pub flip_y: bool,
-}
+// /// View of an external texture that can be used to copy to a texture.
+// ///
+// /// Corresponds to [WebGPU `GPUCopyExternalImageSourceInfo`](
+// /// https://gpuweb.github.io/gpuweb/#dictdef-gpuimagecopyexternalimage).
+// #[cfg(target_arch = "wasm32")]
+// #[derive(Clone, Debug)]
+// pub struct CopyExternalImageSourceInfo {
+//     /// The texture to be copied from. The copy source data is captured at the moment
+//     /// the copy is issued.
+//     pub source: ExternalImageSource,
+//     /// The base texel used for copying from the external image. Together
+//     /// with the `copy_size` argument to copy functions, defines the
+//     /// sub-region of the image to copy.
+//     ///
+//     /// Relative to the top left of the image.
+//     ///
+//     /// Must be [`Origin2d::ZERO`] if [`DownlevelFlags::UNRESTRICTED_EXTERNAL_TEXTURE_COPIES`] is not supported.
+//     pub origin: Origin2d,
+//     /// If the Y coordinate of the image should be flipped. Even if this is
+//     /// true, `origin` is still relative to the top left.
+//     pub flip_y: bool,
+// }
 
-/// Old name for a [`CopyExternalImageSourceInfo`].
-#[deprecated(
-    since = "24.0.0",
-    note = "This has been renamed to `CopyExternalImageSourceInfo`, and will be removed in 25.0.0."
-)]
-#[cfg(target_arch = "wasm32")]
-pub type ImageCopyExternalImage = CopyExternalImageSourceInfo;
+// /// Old name for a [`CopyExternalImageSourceInfo`].
+// #[deprecated(
+//     since = "24.0.0",
+//     note = "This has been renamed to `CopyExternalImageSourceInfo`, and will be removed in 25.0.0."
+// )]
+// #[cfg(target_arch = "wasm32")]
+// pub type ImageCopyExternalImage = CopyExternalImageSourceInfo;
 
 /// Source of an external texture copy.
 ///
-/// Corresponds to the [implicit union type on WebGPU `GPUCopyExternalImageSourceInfo.source`](
-/// https://gpuweb.github.io/gpuweb/#dom-gpuimagecopyexternalimage-source).
-#[cfg(target_arch = "wasm32")]
-#[derive(Clone, Debug)]
-pub enum ExternalImageSource {
-    /// Copy from a previously-decoded image bitmap.
-    ImageBitmap(web_sys::ImageBitmap),
-    /// Copy from an image element.
-    HTMLImageElement(web_sys::HtmlImageElement),
-    /// Copy from a current frame of a video element.
-    HTMLVideoElement(web_sys::HtmlVideoElement),
-    /// Copy from an image.
-    ImageData(web_sys::ImageData),
-    /// Copy from a on-screen canvas.
-    HTMLCanvasElement(web_sys::HtmlCanvasElement),
-    /// Copy from a off-screen canvas.
-    ///
-    /// Requires [`DownlevelFlags::UNRESTRICTED_EXTERNAL_TEXTURE_COPIES`]
-    OffscreenCanvas(web_sys::OffscreenCanvas),
-    /// Copy from a video frame.
-    #[cfg(web_sys_unstable_apis)]
-    VideoFrame(web_sys::VideoFrame),
-}
+// /// Corresponds to the [implicit union type on WebGPU `GPUCopyExternalImageSourceInfo.source`](
+// /// https://gpuweb.github.io/gpuweb/#dom-gpuimagecopyexternalimage-source).
+// #[cfg(target_arch = "wasm32")]
+// #[derive(Clone, Debug)]
+// pub enum ExternalImageSource {
+//     /// Copy from a previously-decoded image bitmap.
+//     ImageBitmap(web_sys::ImageBitmap),
+//     /// Copy from an image element.
+//     HTMLImageElement(web_sys::HtmlImageElement),
+//     /// Copy from a current frame of a video element.
+//     HTMLVideoElement(web_sys::HtmlVideoElement),
+//     /// Copy from an image.
+//     ImageData(web_sys::ImageData),
+//     /// Copy from a on-screen canvas.
+//     HTMLCanvasElement(web_sys::HtmlCanvasElement),
+//     /// Copy from a off-screen canvas.
+//     ///
+//     /// Requires [`DownlevelFlags::UNRESTRICTED_EXTERNAL_TEXTURE_COPIES`]
+//     OffscreenCanvas(web_sys::OffscreenCanvas),
+//     /// Copy from a video frame.
+//     #[cfg(web_sys_unstable_apis)]
+//     VideoFrame(web_sys::VideoFrame),
+// }
 
-#[cfg(target_arch = "wasm32")]
-impl ExternalImageSource {
-    /// Gets the pixel, not css, width of the source.
-    pub fn width(&self) -> u32 {
-        match self {
-            ExternalImageSource::ImageBitmap(b) => b.width(),
-            ExternalImageSource::HTMLImageElement(i) => i.width(),
-            ExternalImageSource::HTMLVideoElement(v) => v.video_width(),
-            ExternalImageSource::ImageData(i) => i.width(),
-            ExternalImageSource::HTMLCanvasElement(c) => c.width(),
-            ExternalImageSource::OffscreenCanvas(c) => c.width(),
-            #[cfg(web_sys_unstable_apis)]
-            ExternalImageSource::VideoFrame(v) => v.display_width(),
-        }
-    }
+// #[cfg(target_arch = "wasm32")]
+// impl ExternalImageSource {
+//     /// Gets the pixel, not css, width of the source.
+//     pub fn width(&self) -> u32 {
+//         match self {
+//             ExternalImageSource::ImageBitmap(b) => b.width(),
+//             ExternalImageSource::HTMLImageElement(i) => i.width(),
+//             ExternalImageSource::HTMLVideoElement(v) => v.video_width(),
+//             ExternalImageSource::ImageData(i) => i.width(),
+//             ExternalImageSource::HTMLCanvasElement(c) => c.width(),
+//             ExternalImageSource::OffscreenCanvas(c) => c.width(),
+//             #[cfg(web_sys_unstable_apis)]
+//             ExternalImageSource::VideoFrame(v) => v.display_width(),
+//         }
+//     }
 
-    /// Gets the pixel, not css, height of the source.
-    pub fn height(&self) -> u32 {
-        match self {
-            ExternalImageSource::ImageBitmap(b) => b.height(),
-            ExternalImageSource::HTMLImageElement(i) => i.height(),
-            ExternalImageSource::HTMLVideoElement(v) => v.video_height(),
-            ExternalImageSource::ImageData(i) => i.height(),
-            ExternalImageSource::HTMLCanvasElement(c) => c.height(),
-            ExternalImageSource::OffscreenCanvas(c) => c.height(),
-            #[cfg(web_sys_unstable_apis)]
-            ExternalImageSource::VideoFrame(v) => v.display_height(),
-        }
-    }
-}
+//     /// Gets the pixel, not css, height of the source.
+//     pub fn height(&self) -> u32 {
+//         match self {
+//             ExternalImageSource::ImageBitmap(b) => b.height(),
+//             ExternalImageSource::HTMLImageElement(i) => i.height(),
+//             ExternalImageSource::HTMLVideoElement(v) => v.video_height(),
+//             ExternalImageSource::ImageData(i) => i.height(),
+//             ExternalImageSource::HTMLCanvasElement(c) => c.height(),
+//             ExternalImageSource::OffscreenCanvas(c) => c.height(),
+//             #[cfg(web_sys_unstable_apis)]
+//             ExternalImageSource::VideoFrame(v) => v.display_height(),
+//         }
+//     }
+// }
 
-#[cfg(target_arch = "wasm32")]
-impl core::ops::Deref for ExternalImageSource {
-    type Target = js_sys::Object;
+// #[cfg(target_arch = "wasm32")]
+// impl core::ops::Deref for ExternalImageSource {
+//     type Target = js_sys::Object;
 
-    fn deref(&self) -> &Self::Target {
-        match self {
-            Self::ImageBitmap(b) => b,
-            Self::HTMLImageElement(i) => i,
-            Self::HTMLVideoElement(v) => v,
-            Self::ImageData(i) => i,
-            Self::HTMLCanvasElement(c) => c,
-            Self::OffscreenCanvas(c) => c,
-            #[cfg(web_sys_unstable_apis)]
-            Self::VideoFrame(v) => v,
-        }
-    }
-}
+//     fn deref(&self) -> &Self::Target {
+//         match self {
+//             Self::ImageBitmap(b) => b,
+//             Self::HTMLImageElement(i) => i,
+//             Self::HTMLVideoElement(v) => v,
+//             Self::ImageData(i) => i,
+//             Self::HTMLCanvasElement(c) => c,
+//             Self::OffscreenCanvas(c) => c,
+//             #[cfg(web_sys_unstable_apis)]
+//             Self::VideoFrame(v) => v,
+//         }
+//     }
+// }
 
-#[cfg(all(
-    target_arch = "wasm32",
-    feature = "fragile-send-sync-non-atomic-wasm",
-    not(target_feature = "atomics")
-))]
-unsafe impl Send for ExternalImageSource {}
-#[cfg(all(
-    target_arch = "wasm32",
-    feature = "fragile-send-sync-non-atomic-wasm",
-    not(target_feature = "atomics")
-))]
-unsafe impl Sync for ExternalImageSource {}
+// #[cfg(all(
+//     target_arch = "wasm32",
+//     feature = "fragile-send-sync-non-atomic-wasm",
+//     not(target_feature = "atomics")
+// ))]
+// unsafe impl Send for ExternalImageSource {}
+// #[cfg(all(
+//     target_arch = "wasm32",
+//     feature = "fragile-send-sync-non-atomic-wasm",
+//     not(target_feature = "atomics")
+// ))]
+// unsafe impl Sync for ExternalImageSource {}
 
 /// Color spaces supported on the web.
 ///
