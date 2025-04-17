@@ -11,7 +11,7 @@ macro_rules! dyn_type {
     // but we still use it to provide Eq,Ord,Hash implementations
     (pub mut struct $name:ident(dyn $interface:tt)) => {
         #[derive(Debug)]
-        pub(crate) struct $name(Arc<dyn $interface>);
+        pub struct $name(Arc<dyn $interface>);
         crate::cmp::impl_eq_ord_hash_arc_address!($name => .0);
 
         impl $name {
@@ -20,7 +20,7 @@ macro_rules! dyn_type {
             }
 
             #[allow(clippy::allow_attributes, dead_code)]
-            pub(crate) fn downcast<T: $interface>(&self) -> Option<&T> {
+            pub fn downcast<T: $interface>(&self) -> Option<&T> {
                 self.0.as_ref().as_any().downcast_ref()
             }
         }
@@ -44,7 +44,7 @@ macro_rules! dyn_type {
     // cloning of arc is allowed
     (pub ref struct $name:ident(dyn $interface:tt)) => {
         #[derive(Debug, Clone)]
-        pub(crate) struct $name(Arc<dyn $interface>);
+        pub struct $name(Arc<dyn $interface>);
         crate::cmp::impl_eq_ord_hash_arc_address!($name => .0);
 
         impl $name {
@@ -52,7 +52,7 @@ macro_rules! dyn_type {
                 Self(Arc::new(t))
             }
 
-            pub(crate) fn downcast<T: $interface>(&self) -> Option<&T> {
+            pub fn downcast<T: $interface>(&self) -> Option<&T> {
                 self.0.as_ref().as_any().downcast_ref()
             }
         }

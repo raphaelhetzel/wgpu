@@ -590,7 +590,7 @@ macro_rules! dispatch_types {
             #[cfg(custom)]
             #[inline]
             #[allow(clippy::allow_attributes, unused)]
-            pub(crate) fn as_custom_opt(&self) -> Option<&$custom_type> {
+            pub fn as_custom_opt(&self) -> Option<&$custom_type> {
                 match self {
                     Self::Custom(value) => Some(value),
                     _ => None,
@@ -718,7 +718,7 @@ macro_rules! dispatch_types {
             #[cfg(custom)]
             #[inline]
             #[allow(clippy::allow_attributes, unused)]
-            pub(crate) fn as_custom_opt(&self) -> Option<&$custom_type> {
+            pub fn as_custom_opt(&self) -> Option<&$custom_type> {
                 match self {
                     Self::Custom(value) => Some(value),
                     _ => None,
